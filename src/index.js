@@ -45,7 +45,7 @@ module.exports = class BDCashCore {
         this.staticnodes = false
         this.timeout = 30000
         this.nodes = {
-            mainnet: ['https://idanodejs01.bdcashchain.org', 'https://idanodejs02.bdcashchain.org', 'https://idanodejs03.bdcashchain.org', 'https://idanodejs04.bdcashchain.org', 'https://idanodejs05.bdcashchain.org', 'https://idanodejs06.bdcashchain.org'],
+            mainnet: ['https://nodesh01.bdcashprotocol.com', 'https://nodesh02.bdcashprotocol.com'],
             testnet: ['https://testnet.bdcashchain.org']
         }
         if (nodes !== undefined) {
