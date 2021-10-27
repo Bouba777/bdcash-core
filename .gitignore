@@ -1,0 +1,6 @@
+node_modules
+BDCashCore
+BDCashTXIDCache
+BDCashUTXOCache
+BDCashP2PMessages
+db
