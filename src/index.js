@@ -46,7 +46,7 @@ module.exports = class BDCashCore {
         this.timeout = 30000
         this.nodes = {
             mainnet: ['https://nodesh01.bdcashprotocol.com', 'https://nodesh02.bdcashprotocol.com'],
-            testnet: ['https://testnet.bdcashchain.org']
+            testnet: ['https://testnet.bdcashprotocol.com']
         }
         if (nodes !== undefined) {
             this.staticnodes = true
@@ -98,7 +98,7 @@ module.exports = class BDCashCore {
                     const db = new BDCashDB(app.isBrowser)
                     let idanodes = await db.get('nodes')
                     try {
-                        let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashchain/bdcash-idanode-network/master/peersv2')
+                        let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashchain/bdcash-nodesh-network/master/peersv2')
                         let raw_nodes = nodes_git.data.split("\n")
                         let nodes = []
                         const defaultIdanodeName = 'idanodejs'
@@ -106,7 +106,7 @@ module.exports = class BDCashCore {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
                                 let idanodeName = node[3] ? node[3] : defaultIdanodeName
-                                let url = 'https://' + idanodeName + node[0] + '.bdcashchain.org'
+                                let url = 'https://' + idanodeName + node[0] + '.bdcashprotocol.com'
                                 if (app.banned.indexOf(url) === -1) {
                                     await db.put('nodes', url)
                                     nodes.push(url)
