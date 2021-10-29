@@ -1,4 +1,4 @@
-const CoinKey = require('@bdcash/coinkey')
+const CoinKey = require('@bdcash-protocol/coinkey')
 const crypto = require('crypto')
 const CryptoJS = require('crypto-js')
 const secp256k1 = require('secp256k1')
@@ -8,7 +8,7 @@ const Trx = require('./trx/trx')
 const BDCashDB = require('./db')
 const NodeRSA = require('node-rsa')
 const { sum, round, subtract } = require('mathjs')
-const bip39 = require('@bdcash/bip39')
+const bip39 = require('@bdcash-protocol/bip39')
 const HDKey = require('hdkey')
 
 const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
@@ -328,7 +328,7 @@ module.exports = class BDCashCore {
             let last = await db.get('checksums', 'version', version)
             if (last === false) {
                 try {
-                    let checksums_git = await axios.get('https://raw.githubusercontent.com/bdcashchain/bdcash-idanodejs/master/checksum')
+                    let checksums_git = await axios.get('https://raw.githubusercontent.com/scryptachain/scrypta-idanodejs/master/checksum')
                     let checksums = checksums_git.data.split("\n")
                     for (let x in checksums) {
                         let checksum = checksums[x].split(':')
@@ -2161,7 +2161,7 @@ module.exports = class BDCashCore {
                         console.log('INDEXER REQUEST', JSON.stringify(indexrequest))
                     }
                     let maintainers = false
-                    let maintainersNodes = ['https://idanodejs01.bdcashchain.org', 'https://idanodejs02.bdcashchain.org', 'https://idanodejs03.bdcashchain.org', 'https://idanodejs04.bdcashchain.org', 'https://idanodejs05.bdcashchain.org', 'https://idanodejs06.bdcashchain.org']
+                    let maintainersNodes = ['https://nodesh01.bdcashprotocol.com', 'nodesh02.bdcashprotocol.com']
                     let jj = 0
                     while (maintainers === false) {
                         try {
