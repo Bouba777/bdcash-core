@@ -98,10 +98,10 @@ module.exports = class BDCashCore {
                     const db = new BDCashDB(app.isBrowser)
                     let idanodes = await db.get('nodes')
                     try {
-                        let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashchain/bdcash-nodesh-network/master/peersv2')
+                        let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashprotocol/bdcash-nodesh-network/master/peersv2')
                         let raw_nodes = nodes_git.data.split("\n")
                         let nodes = []
-                        const defaultIdanodeName = 'idanodejs'
+                        const defaultIdanodeName = 'nodesh'
                         for (let x in raw_nodes) {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
@@ -328,7 +328,7 @@ module.exports = class BDCashCore {
             let last = await db.get('checksums', 'version', version)
             if (last === false) {
                 try {
-                    let checksums_git = await axios.get('https://raw.githubusercontent.com/scryptachain/scrypta-idanodejs/master/checksum')
+                    let checksums_git = await axios.get('https://raw.githubusercontent.com/BdcashProtocol/scrypta-idanodejs/master/checksum')
                     let checksums = checksums_git.data.split("\n")
                     for (let x in checksums) {
                         let checksum = checksums[x].split(':')
