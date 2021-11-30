@@ -2,7 +2,7 @@
 
 <h2 style="text-align: center;"><a id="user-content-bdcash-identity-framework" class="anchor" href="https://github.com/BDCashProtocol/bdcash-identity-framework/new/master?readme=1#bdcash-identity-framework" aria-hidden="true"></a><strong>BDCash Core</strong></h2>
 <p style="text-align: center;">JS implementation of main wallet features.</p>
-<p style="text-align: center;"><a title="English &mdash; BDCash Wiki" href="https://en.bdcash.wiki/core/" target="_blank" rel="nofollow noopener"><strong>Wiki English</strong></a>&nbsp;&middot; &middot; &middot;&nbsp;<a title="Italiano &mdash; BDCash Wiki" href="https://it.bdcash.wiki/core/" target="_blank" rel="nofollow noopener"><strong>Wiki italiano</strong></a></p>
+
 
 <br>This is the main client side library of BDCash Blockchain, written in NodeJS.
 
