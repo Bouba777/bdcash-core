@@ -1,6 +1,6 @@
 {
   "name": "@bdcash-protocol/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "BDCash Javascript Library for build Blockchain enabled applications.",
   "private": false,
   "main": "src/index.js",
@@ -34,7 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "@bdcash-protocol/bip39": "^1.0.0",
-    "@bdcash-protocol/coinkey": "^1.0.3",
+    "@bdcash-protocol/coinkey": "^1.0.4",
     "axios": "^0.21.0",
     "binstring": "^0.2.1",
     "browser-cookies": "^1.2.0",
