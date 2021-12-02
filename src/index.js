@@ -2249,7 +2249,7 @@ module.exports = class BDCashCore {
         const app = this
         let nodes = await this.returnNodes()
         const db = new BDCashDB(app.isBrowser)
-
+        console.log(nodes, db)
         for (let x in nodes) {
             let node = nodes[x]
             let check = await app.checkNode(node)
