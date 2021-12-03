@@ -201,13 +201,13 @@ module.exports = class BDCashCore {
             let res
             try {
                 res = await axios.post(node + endpoint, params, { timeout: app.timeout }).catch(err => {
-                    console.log("ERROR ON IDANODE " + node)
+                    console.log("ERROR ON NODESH " + node)
                     response(false)
                 })
             } catch (e) {
                 node = await app.connectNode()
                 res = await axios.post(node + endpoint, params, { timeout: app.timeout }).catch(err => {
-                    console.log("ERROR ON IDANODE " + node)
+                    console.log("ERROR ON NODESH " + node)
                     response(false)
                 })
             }
@@ -216,7 +216,7 @@ module.exports = class BDCashCore {
                 res.node = node
                 response(res.data)
             } else {
-                console.log("ERROR ON IDANODE WHILE POSTING" + node)
+                console.log("ERROR ON NODESH WHILE POSTING" + node)
                 response(false)
             }
         })
@@ -231,13 +231,13 @@ module.exports = class BDCashCore {
             let res
             try {
                 res = await axios.get(node + endpoint, { timeout: app.timeout }).catch(err => {
-                    console.log("ERROR ON IDANODE " + node)
+                    console.log("ERROR ON NODESH " + node)
                 })
                 res.node = node
             } catch (e) {
                 node = await app.connectNode()
                 res = await axios.get(node + endpoint, { timeout: app.timeout }).catch(err => {
-                    console.log("ERROR ON IDANODE " + node)
+                    console.log("ERROR ON NODESH " + node)
                     response(false)
                 })
             }
@@ -275,7 +275,7 @@ module.exports = class BDCashCore {
                 app.idanode = ''
                 let connected = false
                 if (app.debug === true) {
-                    console.log('CONNECTING TO FIRST AVAILABLE IDANODE')
+                    console.log('CONNECTING TO FIRST AVAILABLE NODESH')
                 }
                 while (connected === false) {
                     let node = await this.returnFirstNode()
@@ -299,14 +299,14 @@ module.exports = class BDCashCore {
                 let check = await app.checkNode(app.idanode)
                 if (check !== false && check.data.toindex <= 1 && check.data.toindex >= 0 && app.banned.indexOf(app.idanode) === -1) {
                     if (app.debug === true) {
-                        console.log('CONNECTED IDANODE ' + app.idanode + ' STILL VALID')
+                        console.log('CONNECTED NODESH ' + app.idanode + ' STILL VALID')
                     }
                     response(app.idanode)
                 } else {
                     app.idanode = ''
                     let connected = false
                     if (app.debug === true) {
-                        console.log('CONNECTED IDANODE ' + app.idanode + ' NOT VALID ANYMORE, CONNECTING TO NEW IDANODE')
+                        console.log('CONNECTED NODESH ' + app.idanode + ' NOT VALID ANYMORE, CONNECTING TO NEW IDANODE')
                     }
                     while (connected === false) {
                         let node = await this.returnFirstNode()
@@ -569,7 +569,7 @@ module.exports = class BDCashCore {
             let sid = await this.createAddress('TEMPORARY', false)
             let averageTimeRequest = await this.createContractRequest(sid.walletstore, 'TEMPORARY',
                 {
-                    contract: "LLsNWqyhrH2wHph879VXTFaNLLYt43Jjq6",
+                    contract: "8JpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
                     version: "latest",
                     function: "getAverageTime",
                     params: ""
@@ -2152,7 +2152,7 @@ module.exports = class BDCashCore {
                         sid.walletstore,
                         'TEMP',
                         {
-                            contract: "LgSAtP3gPURByanZSM32kfEu9C1uyQ6Kfg",
+                            contract: "8JpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
                             function: "index",
                             params: { contract: details.contract, version: 'latest' }
                         }
