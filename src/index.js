@@ -66,15 +66,15 @@ module.exports = class BDCashCore {
             }
         }
 
-        this.mainnetIdaNodes = this.nodes.mainnet
-        this.testnetIdaNodes = this.nodes.testnet
+        this.mainnetNodesh = this.nodes.mainnet
+        this.testnetNodesh = this.nodes.testnet
         this.banned = []
         this.debug = false
         this.MAX_OPRETURN = 7500
         this.testnet = false
         this.portP2P = 42226
         this.sidechain = ''
-        this.idanode = ''
+        this.nodesh = ''
         this.isBrowser = isBrowser
         this.math = {}
         this.math.sum = sum
@@ -87,26 +87,26 @@ module.exports = class BDCashCore {
         this.clearCache()
     }
 
-    //IDANODE FUNCTIONS
+    //Node FUNCTIONS
     returnNodes() {
         const app = this
         return new Promise(async response => {
             if (this.staticnodes === false) {
                 if (this.testnet === true) {
-                    response(app.testnetIdaNodes)
+                    response(app.testnetnodeshs)
                 } else {
                     const db = new BDCashDB(app.isBrowser)
-                    let idanodes = await db.get('nodes')
+                    let nodeshs = await db.get('nodes')
                     try {
                         let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashprotocol/bdcash-nodesh-network/master/peersv2')
                         let raw_nodes = nodes_git.data.split("\n")
                         let nodes = []
-                        const defaultIdanodeName = 'nodesh'
+                        const defaultNodeName = 'nodesh'
                         for (let x in raw_nodes) {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
-                                let idanodeName = node[3] ? node[3] : defaultIdanodeName
-                                let url = 'https://' + idanodeName + node[0] + '.bdcashprotocol.com'
+                                let NodeName = node[3] ? node[3] : defaultNodeName
+                                let url = 'https://' + NodeName + node[0] + '.bdcashprotocol.com'
                                 if (app.banned.indexOf(url) === -1) {
                                     await db.put('nodes', url)
                                     nodes.push(url)
@@ -130,8 +130,8 @@ module.exports = class BDCashCore {
                         }
                         response(nodes)
                     } catch (e) {
-                        if (idanodes.length > 0) {
-                            response(idanodes)
+                        if (nodeshs.length > 0) {
+                            response(nodeshs)
                         } else {
                             // FALLBACK TO STATIC NODES IF GIT FAILS AND DB IS EMPTY
                             if (this.testnet) {
@@ -271,8 +271,8 @@ module.exports = class BDCashCore {
     async connectNode() {
         const app = this
         return new Promise(async response => {
-            if (app.idanode === '' || app.banned.indexOf(app.idanode) !== -1) {
-                app.idanode = ''
+            if (app.nodesh === '' || app.banned.indexOf(app.nodesh) !== -1) {
+                app.nodesh = ''
                 let connected = false
                 if (app.debug === true) {
                     console.log('CONNECTING TO FIRST AVAILABLE NODESH')
@@ -284,9 +284,9 @@ module.exports = class BDCashCore {
                             console.log('TRYING TO CONTACT ' + node)
                         }
                         connected = true
-                        app.idanode = node
+                        app.nodesh = node
                         if (app.debug === true) {
-                            console.log('CONNECTED TO ' + app.idanode)
+                            console.log('CONNECTED TO ' + app.nodesh)
                         }
                         response(node)
                     } else {
@@ -296,23 +296,23 @@ module.exports = class BDCashCore {
                     }
                 }
             } else {
-                let check = await app.checkNode(app.idanode)
-                if (check !== false && check.data.toindex <= 1 && check.data.toindex >= 0 && app.banned.indexOf(app.idanode) === -1) {
+                let check = await app.checkNode(app.nodesh)
+                if (check !== false && check.data.toindex <= 1 && check.data.toindex >= 0 && app.banned.indexOf(app.nodesh) === -1) {
                     if (app.debug === true) {
-                        console.log('CONNECTED NODESH ' + app.idanode + ' STILL VALID')
+                        console.log('CONNECTED NODESH ' + app.nodesh + ' STILL VALID')
                     }
-                    response(app.idanode)
+                    response(app.nodesh)
                 } else {
-                    app.idanode = ''
+                    app.nodesh = ''
                     let connected = false
                     if (app.debug === true) {
-                        console.log('CONNECTED NODESH ' + app.idanode + ' NOT VALID ANYMORE, CONNECTING TO NEW IDANODE')
+                        console.log('CONNECTED NODESH ' + app.nodesh + ' NOT VALID ANYMORE, CONNECTING TO NEW IDANODE')
                     }
                     while (connected === false) {
                         let node = await this.returnFirstNode()
                         if (node !== false) {
                             connected = true
-                            app.idanode = node
+                            app.nodesh = node
                             response(node)
                         }
                     }
@@ -328,7 +328,7 @@ module.exports = class BDCashCore {
             let last = await db.get('checksums', 'version', version)
             if (last === false) {
                 try {
-                    let checksums_git = await axios.get('https://raw.githubusercontent.com/BdcashProtocol/scrypta-idanodejs/master/checksum')
+                    let checksums_git = await axios.get('https://raw.githubusercontent.com/BdcashProtocol/bdcash-nodesh/master/checksum')
                     let checksums = checksums_git.data.split("\n")
                     for (let x in checksums) {
                         let checksum = checksums[x].split(':')
@@ -1480,9 +1480,9 @@ module.exports = class BDCashCore {
     async verifyPlanum() {
         const app = this
         return new Promise(async response => {
-            let idanodeverified = false
+            let nodeshverified = false
             let check_sidechain = {}
-            while (!idanodeverified) {
+            while (!nodeshverified) {
                 check_sidechain = await app.get('/sidechain/check/' + app.sidechain + '/true')
                 if (check_sidechain.verified === false) {
                     if (app.debug) {
@@ -1493,7 +1493,7 @@ module.exports = class BDCashCore {
                     if (app.debug) {
                         console.log('SIDECHAIN HAVE ' + check_sidechain.reliability + '% OF RELIABILITY')
                     }
-                    idanodeverified = true
+                    nodeshverified = true
                 }
             }
             response(check_sidechain)

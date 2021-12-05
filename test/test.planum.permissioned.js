@@ -1,6 +1,6 @@
 let BDCashCore = require('../src/index.js')
 let bdcash = new BDCashCore
-bdcash.mainnetIdaNodes = ['http://localhost:3001']
+bdcash.mainnetNodesh = ['http://localhost:3001']
 
 async function send(amount = 0.001){
     return new Promise(async response => {

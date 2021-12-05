@@ -77,18 +77,18 @@ describe('Addresses', async function() {
     })
 });
 
-describe('Idanodes', async function() {
-    it('Should GET first available IdaNode', function(){
+describe('Nodesh', async function() {
+    it('Should GET first available Nodesh', function(){
         this.timeout(35000)
         return new Promise(async response => {
-            let getinfo = await bdcash.get('/wallet/getinfo', 'https://idanodejs09.bdcashchain.org')
+            let getinfo = await bdcash.get('/wallet/getinfo', 'https://nodesh01.bdcashprotocol.com')
             if(getinfo !== false){
                 response(getinfo)
             }
         })
     })
 
-    it('Should POST first available IdaNode', async function(){
+    it('Should POST first available Nodesh', async function(){
         this.timeout(35000)
         let Bob = await bdcash.createAddress(password, true)
         let Alice = await bdcash.createAddress(password, true)

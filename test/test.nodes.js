@@ -10,7 +10,7 @@ describe('Addresses', async function () {
     })
     it('Should return a defined node, same for testnet or mainnet', async function () {
         this.timeout(35000)
-        let bdcash = new BDCashCore(false, ['https://idanodejs01.bdcashchain.org'])
+        let bdcash = new BDCashCore(false, ['https://nodesh01.bdcashprotocol.com'])
         let nodes = await bdcash.returnNodes()
         console.log('MAINNET', nodes)
         bdcash.testnet = true
@@ -19,7 +19,7 @@ describe('Addresses', async function () {
     })
     it('Should return defined nodes, different for testnet or mainnet', async function () {
         this.timeout(35000)
-        let bdcash = new BDCashCore(false, {mainnet: ['https://idanodejs01.bdcashchain.org'], testnet: ['https://testnet.bdcashchain.org']})
+        let bdcash = new BDCashCore(false, {mainnet: ['https://nodesh01.bdcashprotocol.com'], testnet: ['https://testnet.bdcashprotocol.com']})
         let nodes = await bdcash.returnNodes()
         console.log('MAINNET', nodes)
         bdcash.testnet = true
