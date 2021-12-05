@@ -18,7 +18,7 @@ To override the IdaNodes list you've to rewrite the array like this:
 let BDCashCore = require('@bdcash-protocol/core')
 let bdcash = new BDCashCore
 bdcash.staticnodes = true
-bdcash.mainnetIdaNodes = ['http://localhost:3001', 'https://anotheridanode.com']
+bdcash.mainnetNodesh = ['http://localhost:3001', 'https://anothernode.com']
 ```
 
 # BDCash-Core CLI (WIP)
