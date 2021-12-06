@@ -12,20 +12,20 @@ const bip39 = require('@bdcash-protocol/bip39')
 const HDKey = require('hdkey')
 
 const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
-const lyraInfo = {
+const bdcashInfo = {
     mainnet: {
-        private: 0xae,
-        public: 0x30,
-        scripthash: 0x0d,
+        private: 0x97,
+        public: 0x12,
+        scripthash: 0x53,
         bip32: {
             public: 0x0488b21e,
             private: 0x0488ade4,
         }
     },
     testnet: {
-        private: 0xae,
-        public: 0x7f,
-        scripthash: 0x13,
+        private: 0xb8,
+        public: 0xfa,
+        scripthash: 0x122,
         bip32: {
             public: 0x043587cf,
             private: 0x04358394,
@@ -45,8 +45,8 @@ module.exports = class BDCashCore {
         this.staticnodes = false
         this.timeout = 30000
         this.nodes = {
-            mainnet: ['https://nodesh01.bdcashprotocol.com', 'https://nodesh02.bdcashprotocol.com'],
-            testnet: ['https://testnet.bdcashprotocol.com']
+            mainnet: ['http://nodesh01.bdcashprotocol.com', 'http://nodesh02.bdcashprotocol.com'],
+            testnet: ['http://testnet.bdcashprotocol.com']
         }
         if (nodes !== undefined) {
             this.staticnodes = true
@@ -72,7 +72,7 @@ module.exports = class BDCashCore {
         this.debug = false
         this.MAX_OPRETURN = 7500
         this.testnet = false
-        this.portP2P = 42226
+        this.portP2P = 36263
         this.sidechain = ''
         this.nodesh = ''
         this.isBrowser = isBrowser
@@ -106,7 +106,7 @@ module.exports = class BDCashCore {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
                                 let NodeName = node[3] ? node[3] : defaultNodeName
-                                let url = 'https://' + NodeName + node[0] + '.bdcashprotocol.com'
+                                let url = 'http://' + NodeName + node[0] + '.bdcashprotocol.com'
                                 if (app.banned.indexOf(url) === -1) {
                                     await db.put('nodes', url)
                                     nodes.push(url)
@@ -306,7 +306,7 @@ module.exports = class BDCashCore {
                     app.nodesh = ''
                     let connected = false
                     if (app.debug === true) {
-                        console.log('CONNECTED NODESH ' + app.nodesh + ' NOT VALID ANYMORE, CONNECTING TO NEW IDANODE')
+                        console.log('CONNECTED NODESH ' + app.nodesh + ' NOT VALID ANYMORE, CONNECTING TO NEW NODESH')
                     }
                     while (connected === false) {
                         let node = await this.returnFirstNode()
@@ -676,7 +676,7 @@ module.exports = class BDCashCore {
                 mnemonic = await this.generateMnemonic(language)
             }
             let seed = await bip39.mnemonicToSeed(mnemonic)
-            var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+            var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             let xprv = hdkey.privateExtendedKey
             let xpub = hdkey.publicExtendedKey
 
@@ -765,9 +765,9 @@ module.exports = class BDCashCore {
         return new Promise(async response => {
 
             try {
-                var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+                var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             } catch (e) {
-                var hdkey = HDKey.fromMasterSeed(seed, this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+                var hdkey = HDKey.fromMasterSeed(seed, this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             }
 
             let xprv = hdkey.privateExtendedKey
@@ -782,13 +782,13 @@ module.exports = class BDCashCore {
 
     deriveKeyFromMnemonic(mnemonic, index) {
         return new Promise(async response => {
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
 
             let seed = await bip39.mnemonicToSeed(mnemonic)
-            var hdkey = HDKey.fromMasterSeed(seed, this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+            var hdkey = HDKey.fromMasterSeed(seed, this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             var childkey = hdkey.derive(index)
             let derivedxprv = childkey.privateExtendedKey
             let derivedxpub = childkey.publicExtendedKey
@@ -806,12 +806,12 @@ module.exports = class BDCashCore {
 
     deriveKeyFromSeed(seed, index) {
         return new Promise(async response => {
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
 
-            var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32)
+            var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32)
             var childkey = hdkey.derive(index)
             let derivedxprv = childkey.privateExtendedKey
             let derivedxpub = childkey.publicExtendedKey
@@ -829,12 +829,12 @@ module.exports = class BDCashCore {
 
     deriveKeyFromXPrv(xprv, index) {
         return new Promise(async response => {
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
 
-            var hdkey = HDKey.fromExtendedKey(xprv, this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+            var hdkey = HDKey.fromExtendedKey(xprv, this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             var childkey = hdkey.derive(index)
             var key = new CoinKey(childkey.privateKey, params)
             let derivedxprv = childkey.privateExtendedKey
@@ -852,12 +852,12 @@ module.exports = class BDCashCore {
 
     deriveKeyfromXPub(xpub, index) {
         return new Promise(async response => {
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
 
-            var hdkey = HDKey.fromExtendedKey(xpub, this.testnet ? lyraInfo.testnet.bip32 : lyraInfo.mainnet.bip32);
+            var hdkey = HDKey.fromExtendedKey(xpub, this.testnet ? bdcashInfo.testnet.bip32 : bdcashInfo.mainnet.bip32);
             var childkey = hdkey.derive(index)
 
             response({
@@ -870,9 +870,9 @@ module.exports = class BDCashCore {
     //ADDRESS MANAGEMENT
     async createAddress(password, saveKey = true, label = '') {
         // LYRA WALLET
-        let params = lyraInfo.mainnet
+        let params = bdcashInfo.mainnet
         if (this.testnet === true) {
-            params = lyraInfo.testnet
+            params = bdcashInfo.testnet
         }
         var ck = new CoinKey.createRandom(params)
 
@@ -984,9 +984,9 @@ module.exports = class BDCashCore {
 
     async getAddressFromPubKey(pubKey) {
         return new Promise(response => {
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
             let pubkeybuffer = Buffer.from(pubKey, 'hex')
             var sha = crypto.createHash('sha256').update(pubkeybuffer).digest()
@@ -1611,7 +1611,7 @@ module.exports = class BDCashCore {
                                     }
                                 } else {
                                     if (this.debug) {
-                                        console.log('CAN\'T USE PLANUM UNSPENT ' + unspent[i].sxid + ':' + unspent[i].vout)
+                                        console.log('CAN\'T USE CHAIN UNSPENT ' + unspent[i].sxid + ':' + unspent[i].vout)
                                         if (unspent[i].time > txtime) {
                                             console.log('INPUT IS IN THE FUTURE')
                                         }
@@ -2058,9 +2058,9 @@ module.exports = class BDCashCore {
     async signMessage(privatekey, message) {
         return new Promise(response => {
             //CREATING CK OBJECT
-            let params = lyraInfo.mainnet
+            let params = bdcashInfo.mainnet
             if (this.testnet === true) {
-                params = lyraInfo.testnet
+                params = bdcashInfo.testnet
             }
             var ck = CoinKey.fromWif(privatekey, params);
             //CREATE HASH FROM MESSAGE
@@ -2161,7 +2161,7 @@ module.exports = class BDCashCore {
                         console.log('INDEXER REQUEST', JSON.stringify(indexrequest))
                     }
                     let maintainers = false
-                    let maintainersNodes = ['https://nodesh01.bdcashprotocol.com', 'nodesh02.bdcashprotocol.com']
+                    let maintainersNodes = ['http://nodesh01.bdcashprotocol.com', 'http://nodesh02.bdcashprotocol.com']
                     let jj = 0
                     while (maintainers === false) {
                         try {

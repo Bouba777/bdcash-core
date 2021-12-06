@@ -1,6 +1,6 @@
 {
   "name": "@bdcash-protocol/core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "BDCash Javascript Library for build Blockchain enabled applications.",
   "private": false,
   "main": "src/index.js",
@@ -24,7 +24,8 @@
   "keywords": [
     "blockchain",
     "bdcash",
-    "bdcashchain"
+    "bdcashchain",
+    "bdcash protocol"
   ],
   "author": "BDCash",
   "repository": {
