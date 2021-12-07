@@ -11,7 +11,7 @@ const { sum, round, subtract } = require('mathjs')
 const bip39 = require('@bdcash-protocol/bip39')
 const HDKey = require('hdkey')
 
-const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
+const LYRA_DERIVATION_PATH = 'm/44\'/623\'/0\'/0';
 const bdcashInfo = {
     mainnet: {
         private: 0x97,
