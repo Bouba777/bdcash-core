@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@bdcash-protocol/core": "^1.0.5"
+    "@bdcash-protocol/core": "^1.0.6"
   }
 }

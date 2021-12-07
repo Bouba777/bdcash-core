@@ -1,4 +1,4 @@
-module.exports = class BDCashDB {
+module.exports = class bdcashDB {
     constructor(isBrowser = false){
         const db = this 
         db.isBrowser = isBrowser

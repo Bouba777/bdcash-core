@@ -16,9 +16,15 @@ if(argv._.length > 1){
 // SWITCH COMMANDS
 async function parseCommand(){
     switch(command){
+        // GET INFO
         case "getinfo":
             let getinfo = await bdcash.get('/wallet/getinfo').catch(err=>{console.log(err)})
             console.log(JSON.stringify(getinfo))
+        break;
+        // GET BALANCE
+        case "getbalance":
+            let getbalance = await bdcash.get('/wallet/getbalance').catch(err=>{console.log(err)})
+            console.log(JSON.stringify(getbalance))
         break;
     }
 }

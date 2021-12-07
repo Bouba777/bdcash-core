@@ -5,13 +5,13 @@ const secp256k1 = require('secp256k1')
 const cs = require('coinstring')
 const axios = require('axios')
 const Trx = require('./trx/trx')
-const BDCashDB = require('./db')
+const bdcashDB = require('./db')
 const NodeRSA = require('node-rsa')
 const { sum, round, subtract } = require('mathjs')
 const bip39 = require('@bdcash-protocol/bip39')
 const HDKey = require('hdkey')
 
-const LYRA_DERIVATION_PATH = 'm/44\'/623\'/0\'/0';
+const BDCASH_DERIVATION_PATH = 'm/44\'/623\'/0\'/0';
 const bdcashInfo = {
     mainnet: {
         private: 0x97,
@@ -95,7 +95,7 @@ module.exports = class BDCashCore {
                 if (this.testnet === true) {
                     response(app.testnetnodeshs)
                 } else {
-                    const db = new BDCashDB(app.isBrowser)
+                    const db = new bdcashDB(app.isBrowser)
                     let nodeshs = await db.get('nodes')
                     try {
                         let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashprotocol/bdcash-nodesh-network/master/peersv2')
@@ -324,7 +324,7 @@ module.exports = class BDCashCore {
     async returnLastChecksum(version) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let last = await db.get('checksums', 'version', version)
             if (last === false) {
                 try {
@@ -427,7 +427,7 @@ module.exports = class BDCashCore {
     async clearCache(force = false) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             if (force) {
                 await db.destroy('sxidcache')
                 await db.destroy('txidcache')
@@ -441,7 +441,7 @@ module.exports = class BDCashCore {
     async returnTXIDCache() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let cache = await db.get('txidcache')
             response(cache)
         })
@@ -450,7 +450,7 @@ module.exports = class BDCashCore {
     async pushTXIDtoCache(txid) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             await db.put('txidcache', txid)
             response(true)
         })
@@ -459,7 +459,7 @@ module.exports = class BDCashCore {
     async returnUTXOCache() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let cache = await db.get('utxocache')
             response(cache)
         })
@@ -468,7 +468,7 @@ module.exports = class BDCashCore {
     async pushUTXOtoCache(utxo) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             await db.put('utxocache', utxo)
             response(true)
         })
@@ -477,7 +477,7 @@ module.exports = class BDCashCore {
     async returnSXIDCache() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let cache = await db.get('sxidcache')
             response(cache)
         })
@@ -486,7 +486,7 @@ module.exports = class BDCashCore {
     async pushSXIDtoCache(sxid) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             await db.put('sxidcache', sxid)
             response(true)
         })
@@ -495,7 +495,7 @@ module.exports = class BDCashCore {
     async returnUSXOCache() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let cache = await db.get('usxocache')
             response(cache)
         })
@@ -504,7 +504,7 @@ module.exports = class BDCashCore {
     async pushUSXOtoCache(usxo) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             await db.put('usxocache', usxo)
             response(true)
         })
@@ -670,7 +670,7 @@ module.exports = class BDCashCore {
 
     buildxSid(password, language = '', saveKey = true, mnemonic = '', label = '') {
         const app = this
-        const db = new BDCashDB(app.isBrowser)
+        const db = new bdcashDB(app.isBrowser)
         return new Promise(async response => {
             if (mnemonic === '') {
                 mnemonic = await this.generateMnemonic(language)
@@ -718,7 +718,7 @@ module.exports = class BDCashCore {
         const app = this
         return new Promise(async response => {
             if (xpub.length === 111) {
-                const db = new BDCashDB(app.isBrowser)
+                const db = new bdcashDB(app.isBrowser)
                 let doc = await db.get('xsid', 'xpub', xpub)
                 if (doc !== undefined) {
                     response(doc.wallet)
@@ -869,28 +869,28 @@ module.exports = class BDCashCore {
 
     //ADDRESS MANAGEMENT
     async createAddress(password, saveKey = true, label = '') {
-        // LYRA WALLET
+        // BDCASH WALLET
         let params = bdcashInfo.mainnet
         if (this.testnet === true) {
             params = bdcashInfo.testnet
         }
         var ck = new CoinKey.createRandom(params)
 
-        var lyrapub = ck.publicAddress;
-        var lyraprv = ck.privateWif;
-        var lyrakey = ck.publicKey.toString('hex');
+        var bdcashpub = ck.publicAddress;
+        var bdcashprv = ck.privateWif;
+        var bdcashkey = ck.publicKey.toString('hex');
 
         var wallet = {
-            prv: lyraprv,
-            key: lyrakey
+            prv: bdcashprv,
+            key: bdcashkey
         }
 
-        var walletstore = await this.buildWallet(password, lyrapub, wallet, saveKey, label)
+        var walletstore = await this.buildWallet(password, bdcashpub, wallet, saveKey, label)
 
         var response = {
-            pub: lyrapub,
-            key: lyrakey,
-            prv: lyraprv,
+            pub: bdcashpub,
+            key: bdcashkey,
+            prv: bdcashprv,
             walletstore: walletstore
         }
         return response;
@@ -898,7 +898,7 @@ module.exports = class BDCashCore {
 
     async buildWallet(password, pub, wallet, saveKey = true, label = '') {
         const app = this
-        const db = new BDCashDB(app.isBrowser)
+        const db = new bdcashDB(app.isBrowser)
         return new Promise(async response => {
 
             let wallethex = await this.cryptData(JSON.stringify(wallet), password)
@@ -927,7 +927,7 @@ module.exports = class BDCashCore {
 
     async saveWallet(sid, label = '') {
         const app = this
-        const db = new BDCashDB(app.isBrowser)
+        const db = new bdcashDB(app.isBrowser)
         return new Promise(async response => {
             if (sid.indexOf('xpub') === -1) {
                 let SIDS = sid.split(':')
@@ -1004,7 +1004,7 @@ module.exports = class BDCashCore {
 
     async importBrowserSID() {
         const app = this
-        const db = new BDCashDB(app.isBrowser)
+        const db = new bdcashDB(app.isBrowser)
         if (app.isBrowser) {
             let SID = localStorage.getItem('SID')
             if (SID !== null) {
@@ -1023,18 +1023,18 @@ module.exports = class BDCashCore {
 
     importPrivateKey(key, password, save = true) {
         return new Promise(async response => {
-            let lyrakey = await this.getPublicKey(key)
-            let lyrapub = await this.getAddressFromPubKey(lyrakey)
+            let bdcashkey = await this.getPublicKey(key)
+            let bdcashpub = await this.getAddressFromPubKey(bdcashkey)
 
             var wallet = {
                 prv: key,
-                key: lyrakey
+                key: bdcashkey
             }
-            var walletstore = await this.buildWallet(password, lyrapub, wallet, save)
+            var walletstore = await this.buildWallet(password, bdcashpub, wallet, save)
 
             response({
-                pub: lyrapub,
-                key: lyrakey,
+                pub: bdcashpub,
+                key: bdcashkey,
                 prv: key,
                 walletstore: walletstore
             })
@@ -1045,7 +1045,7 @@ module.exports = class BDCashCore {
         const app = this
         return new Promise(async response => {
             if (address.length === 34) {
-                const db = new BDCashDB(app.isBrowser)
+                const db = new bdcashDB(app.isBrowser)
                 let doc = await db.get('wallet', 'address', address)
                 if (doc !== undefined) {
                     response(doc.wallet)
@@ -2248,7 +2248,7 @@ module.exports = class BDCashCore {
     async connectP2P(callback) {
         const app = this
         let nodes = await this.returnNodes()
-        const db = new BDCashDB(app.isBrowser)
+        const db = new bdcashDB(app.isBrowser)
         console.log(nodes, db)
         for (let x in nodes) {
             let node = nodes[x]
@@ -2337,7 +2337,7 @@ module.exports = class BDCashCore {
     returnIdentities() {
         const app = this
         return new Promise(response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let wallet = db.get('wallet')
             response(wallet)
         })
@@ -2346,7 +2346,7 @@ module.exports = class BDCashCore {
     returnIdentity(address) {
         const app = this
         return new Promise(response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let wallet = db.get('wallet', 'address', address)
             if (wallet !== false) {
                 response(wallet)
@@ -2360,7 +2360,7 @@ module.exports = class BDCashCore {
         const app = this
         return new Promise(async response => {
             let wallet = await app.returnKey(address)
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let SIDS = wallet.split(':')
             let stored = await db.get('wallet', 'address', SIDS[0])
             if (stored.rsa === undefined) {
@@ -2418,7 +2418,7 @@ module.exports = class BDCashCore {
     setDefaultIdentity(address) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let wallet = await db.get('wallet', 'address', address)
             if (wallet !== false && wallet !== null) {
                 if (app.isBrowser) {
@@ -2439,7 +2439,7 @@ module.exports = class BDCashCore {
     returnDefaultIdentity() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             if (app.isBrowser) {
                 if (localStorage.getItem('SID') !== null) {
                     response(localStorage.getItem('SID'))
@@ -2466,7 +2466,7 @@ module.exports = class BDCashCore {
     returnDefaultxSid() {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             if (app.isBrowser) {
                 if (localStorage.getItem('xSID') !== null) {
                     response(localStorage.getItem('xSID'))
@@ -2493,7 +2493,7 @@ module.exports = class BDCashCore {
     setDefaultxIdentity(xpub) {
         const app = this
         return new Promise(async response => {
-            const db = new BDCashDB(app.isBrowser)
+            const db = new bdcashDB(app.isBrowser)
             let wallet = await db.get('xsid', 'xpub', xpub)
             if (wallet !== false && wallet !== null) {
                 if (app.isBrowser) {
