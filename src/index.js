@@ -18,8 +18,8 @@ const bdcashInfo = {
         public: 0x12,
         scripthash: 0x53,
         bip32: {
-            public: 0x0488b21e,
-            private: 0x0488ade4,
+            public: 0x0488b21f,
+            private: 0x0488ade3,
         }
     },
     testnet: {
@@ -27,8 +27,8 @@ const bdcashInfo = {
         public: 0xfa,
         scripthash: 0x122,
         bip32: {
-            public: 0x043587cf,
-            private: 0x04358394,
+            public: 0x043587c4,
+            private: 0x04358398,
         }
     }
 }
@@ -101,7 +101,7 @@ module.exports = class BDCashCore {
                         let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashprotocol/bdcash-nodesh-network/master/peersv2')
                         let raw_nodes = nodes_git.data.split("\n")
                         let nodes = []
-                        const defaultNodeName = 'nodesh'
+                        const defaultNodeName = 'nodesh0'
                         for (let x in raw_nodes) {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
