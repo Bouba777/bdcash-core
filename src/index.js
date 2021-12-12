@@ -11,7 +11,7 @@ const { sum, round, subtract } = require('mathjs')
 const bip39 = require('@bdcash-protocol/bip39')
 const HDKey = require('hdkey')
 
-const BDCASH_DERIVATION_PATH = 'm/44\'/623\'/0\'/0';
+const BDCASH_DERIVATION_PATH = 'm/44\'/77\'/0\'/0';
 const bdcashInfo = {
     mainnet: {
         private: 0x97,
@@ -1155,7 +1155,7 @@ module.exports = class BDCashCore {
         })
     }
 
-    async createRawTransaction(from, outputs = '', metadata = '', fees = 0.001) {
+    async createRawTransaction(from, outputs = '', metadata = '', fees = 0.0001) {
         var trx = Trx.transaction();
         var MAX_OPRETURN = this.MAX_OPRETURN
         var unspent = []
@@ -1207,13 +1207,13 @@ module.exports = class BDCashCore {
                 if (Object.keys(outputs).length > 0 && outputs[from] === undefined) {
                     let keys = Object.keys(outputs)
                     for (let k in keys) {
-                        if (outputs[keys[k]] > 0.00001) {
-                            if (amount > 0.00001) {
+                        if (outputs[keys[k]] > 0.0001) {
+                            if (amount > 0.0001) {
                                 trx.addoutput(keys[k], outputs[keys[k]]);
                             }
                         }
                     }
-                    if (change > 0.00001) {
+                    if (change > 0.0001) {
                         trx.addoutput(from, change);
                     }
                 } else {
@@ -1324,15 +1324,15 @@ module.exports = class BDCashCore {
                     if (inputamount >= amountneed) {
                         var change = inputamount - amountneed;
                         if (to !== from) {
-                            if (amount > 0.00001) {
+                            if (amount > 0.0001) {
                                 trx.addoutput(to, amount);
                             }
-                            if (change > 0.00001) {
+                            if (change > 0.0001) {
                                 trx.addoutput(from, change);
                             }
                         } else {
                             var realamount = inputamount - fees
-                            if (realamount > 0.00001) {
+                            if (realamount > 0.0001) {
                                 if (this.debug === true) {
                                     console.log('SENDING INPUT - FEES TO SENDER, BECAUSE SENDER AND RECEIVER ARE SAME ACCOUNT', realamount)
                                 }
@@ -1966,7 +1966,7 @@ module.exports = class BDCashCore {
                                 var i = 0
                                 var rawtransaction
                                 while (txid !== null && txid !== undefined && txid.length !== 64) {
-                                    var fees = 0.001 + (i / 1000)
+                                    var fees = 0.0001 + (i / 1000)
                                     //console.log('STORING CHUNK #' + cix, chunks[cix])
                                     rawtransaction = await this.build(wallet, password, false, address, 0, chunks[cix], fees)
                                     txid = await this.sendRawTransaction(rawtransaction.signed)
