@@ -101,7 +101,7 @@ module.exports = class BDCashCore {
                         let nodes_git = await axios.get('https://raw.githubusercontent.com/bdcashprotocol/bdcash-nodesh-network/master/peersv2')
                         let raw_nodes = nodes_git.data.split("\n")
                         let nodes = []
-                        const defaultNodeName = 'nodesh0'
+                        const defaultNodeName = 'nodesh'
                         for (let x in raw_nodes) {
                             let node = raw_nodes[x].split(':')
                             if (node[0].length > 0) {
