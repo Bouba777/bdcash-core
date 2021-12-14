@@ -45,8 +45,8 @@ module.exports = class BDCashCore {
         this.staticnodes = false
         this.timeout = 30000
         this.nodes = {
-            mainnet: ['http://nodesh01.bdcashprotocol.com', 'http://nodesh02.bdcashprotocol.com'],
-            testnet: ['http://testnet.bdcashprotocol.com']
+            mainnet: ['https://nodesh01.bdcashprotocol.com'],
+            testnet: ['https://testnet.bdcashprotocol.com']
         }
         if (nodes !== undefined) {
             this.staticnodes = true
@@ -2161,7 +2161,7 @@ module.exports = class BDCashCore {
                         console.log('INDEXER REQUEST', JSON.stringify(indexrequest))
                     }
                     let maintainers = false
-                    let maintainersNodes = ['http://nodesh01.bdcashprotocol.com', 'http://nodesh02.bdcashprotocol.com']
+                    let maintainersNodes = ['http://nodesh01.bdcashprotocol.com']
                     let jj = 0
                     while (maintainers === false) {
                         try {
