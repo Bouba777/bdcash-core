@@ -14,21 +14,21 @@ const HDKey = require('hdkey')
 const BDCASH_DERIVATION_PATH = 'm/44\'/77\'/0\'/0';
 const bdcashInfo = {
     mainnet: {
-        private: 0x97,
-        public: 0x12,
-        scripthash: 0x53,
+        private: 0x1A,
+        public: 0x19,
+        scripthash: 0x19,
         bip32: {
-            public: 0x0488b21f,
-            private: 0x0488ade3,
+            public:  0x04B24746,
+            private: 0x04B24308,
         }
     },
     testnet: {
-        private: 0xb8,
-        public: 0xfa,
-        scripthash: 0x122,
+        private: 0x56,
+        public: 0x55,
+        scripthash: 0x56,
         bip32: {
-            public: 0x043587c4,
-            private: 0x04358398,
+            public: 0x043587CF,
+            private: 0x04358394,
         }
     }
 }
@@ -46,7 +46,7 @@ module.exports = class BDCashCore {
         this.timeout = 30000
         this.nodes = {
             mainnet: ['https://nodesh01.bdcashprotocol.com'],
-            testnet: ['https://testnet.bdcashprotocol.com']
+            testnet: ['https://nodeshtest.bdcashprotocol.com']
         }
         if (nodes !== undefined) {
             this.staticnodes = true
@@ -70,9 +70,9 @@ module.exports = class BDCashCore {
         this.testnetNodesh = this.nodes.testnet
         this.banned = []
         this.debug = false
-        this.MAX_OPRETURN = 7500
+        this.MAX_OPRETURN = 100000
         this.testnet = false
-        this.portP2P = 36263
+        this.portP2P = 17292
         this.sidechain = ''
         this.nodesh = ''
         this.isBrowser = isBrowser
@@ -569,7 +569,7 @@ module.exports = class BDCashCore {
             let sid = await this.createAddress('TEMPORARY', false)
             let averageTimeRequest = await this.createContractRequest(sid.walletstore, 'TEMPORARY',
                 {
-                    contract: "8JpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
+                    contract: "BJpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
                     version: "latest",
                     function: "getAverageTime",
                     params: ""
@@ -2152,7 +2152,7 @@ module.exports = class BDCashCore {
                         sid.walletstore,
                         'TEMP',
                         {
-                            contract: "8JpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
+                            contract: "BJpRAuMCg58Zr6eYjKNpRgXGHjmT8mi8GE",
                             function: "index",
                             params: { contract: details.contract, version: 'latest' }
                         }
