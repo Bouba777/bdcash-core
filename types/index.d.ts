@@ -1,7 +1,7 @@
 // TypeScript Version: 3.3
 // see https://github.com/Microsoft/dtslint#specify-a-typescript-version for more information
 
-declare module '@bdcash-protocol/core';
+declare module '@bdeco/core';
 
 declare class BDCashCore {
     staticnodes: boolean;

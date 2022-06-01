@@ -8,14 +8,14 @@
 
 You can use this version by installing it directly from npm:
 
-```npm install --save @bdcash-protocol/core```
+```npm install --save @bdeco/core```
 
 # Use your own Nodesh
 
 To override the Nodesh list you've to rewrite the array like this:
 
 ```
-let BDCashCore = require('@bdcash-protocol/core')
+let BDCashCore = require('@bdeco/core')
 let bdcash = new BDCashCore
 bdcash.staticnodes = true
 bdcash.mainnetNodesh = ['http://localhost:3001', 'https://anothernode.com']

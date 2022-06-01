@@ -1,4 +1,4 @@
-const CoinKey = require('@bdcash-protocol/coinkey')
+const CoinKey = require('@bdeco/coinkey')
 const crypto = require('crypto')
 const CryptoJS = require('crypto-js')
 const secp256k1 = require('secp256k1')
@@ -8,7 +8,7 @@ const Trx = require('./trx/trx')
 const bdcashDB = require('./db')
 const NodeRSA = require('node-rsa')
 const { sum, round, subtract } = require('mathjs')
-const bip39 = require('@bdcash-protocol/bip39')
+const bip39 = require('@bdeco/bip39')
 const HDKey = require('hdkey')
 
 const BDCASH_DERIVATION_PATH = 'm/44\'/77\'/0\'/0';

@@ -1,11 +1,11 @@
 {
-  "name": "@bdcash-protocol/core",
-  "version": "1.1.0",
-  "description": "BDCash Javascript Library for build Blockchain enabled applications.",
+  "name": "@bdeco/core",
+  "version": "1.0.0",
+  "description": "BDCashProtocol Javascript Library for build Blockchain enabled applications.",
   "private": false,
   "main": "src/index.js",
   "bin": {
-    "bdcash": "./src/cli.js"
+    "bdeco": "./src/cli.js"
   },
   "typings": "./types/index.d.ts",
   "scripts": {
@@ -17,25 +17,26 @@
     "test:planum": "node test/test.planum.js",
     "test:permissioned": "node test/test.planum.permissioned.js",
     "test:tx": "node test/test.transactions.js",
-    "ts:dtslint": "dtslint ./types/",
+    "ts:dts
+    lint": "dtslint ./types/",
     "test:nodes": "mocha test/test.nodes.js",
     "pub": "npm publish --access public"
   },
   "keywords": [
     "blockchain",
-    "bdcash",
+    "bdeco",
     "bdcashchain",
-    "bdcash protocol"
+    "bdcashprotocol"
   ],
-  "author": "BDCash",
+  "author": "BDCashProtocol",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BdcashProtocol/bdcash-core"
+    "url": "https://github.com/BdcashProtocol/bdeco-core"
   },
   "license": "MIT",
   "dependencies": {
-    "@bdcash-protocol/bip39": "^1.0.0",
-    "@bdcash-protocol/coinkey": "^1.0.4",
+    "@bdeco/bip39": "^1.0.0",
+    "@bdeco/coinkey": "^1.0.0",
     "axios": "^0.21.0",
     "binstring": "^0.2.1",
     "browser-cookies": "^1.2.0",
