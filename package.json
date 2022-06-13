@@ -17,18 +17,17 @@
     "test:planum": "node test/test.planum.js",
     "test:permissioned": "node test/test.planum.permissioned.js",
     "test:tx": "node test/test.transactions.js",
-    "ts:dts,
-    lint": "dtslint ./types/",
+    "ts:dtslint": "dtslint ./types/",
     "test:nodes": "mocha test/test.nodes.js",
     "pub": "npm publish --access public"
   },
   "keywords": [
     "blockchain",
     "bdeco",
-    "bdcashchain",
-    "bdcashprotocol"
+    "bdecochain",
+    "bdcashprotocol ecosystem"
   ],
-  "author": "BDCashProtocol",
+  "author": "BDCashProtocol Ecosystem",
   "repository": {
     "type": "git",
     "url": "https://github.com/BdcashProtocol/bdeco-core"
