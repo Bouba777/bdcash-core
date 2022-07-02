@@ -3,7 +3,6 @@
 <h2 style="text-align: center;"><a id="user-content-bdcash-identity-framework" class="anchor" href="https://github.com/BDCashProtocol/bdcash-identity-framework/new/master?readme=1#bdcash-identity-framework" aria-hidden="true"></a><strong>BDCash Core</strong></h2>
 <p style="text-align: center;">JS implementation of main wallet features.</p>
 
-
 <br>This is the main client side library of BDCash Blockchain, written in NodeJS.
 
 You can use this version by installing it directly from npm:
