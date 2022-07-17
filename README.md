@@ -20,7 +20,7 @@ bdcash.staticnodes = true
 bdcash.mainnetNodesh = ['http://localhost:3001', 'https://anothernode.com']
 ```
 
-# BDCash-Core CLI (WIP)
+BDCash-Core CLI (WIP)
 
 If you want to use the module as a CLI you have to run:
 
